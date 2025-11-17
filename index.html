@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kolaboravis Creative Studio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="icon"
+      href="https://upload.wikimedia.org/wikipedia/commons/3/3a/Logo_K.png"
+      type="image/png"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+      .fade-in {
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeInUp 1s ease forwards;
+      }
+      @keyframes fadeInUp {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .gradient-text {
+        background: linear-gradient(90deg, #f97316, #2563eb);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .btn-main {
+        background: linear-gradient(to right, #f97316, #2563eb);
+        color: white;
+        transition: all 0.3s ease;
+      }
+      .btn-main:hover {
+        opacity: 0.9;
+        transform: scale(1.05);
+      }
+      .filter-btn.active {
+        background: linear-gradient(to right, #f97316, #2563eb);
+        color: white;
+      }
+      /* Premium Additions */
+      .service-card:hover {
+        transform: scale(1.03) rotateX(5deg) rotateY(5deg);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        border: 2px solid transparent;
+        background: linear-gradient(#0f172a, #0f172a) padding-box,
+          linear-gradient(45deg, #f97316, #2563eb) border-box;
+        animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+      }
+      @keyframes pulse {
+        0% {
+          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        50% {
+          box-shadow: 0 20px 60px rgba(249, 115, 22, 0.5),
+            0 0 0 10px rgba(37, 99, 235, 0.3);
+        }
+        100% {
+          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+      }
+      .service-icon {
+        transition: transform 0.3s ease;
+      }
+      .service-card:hover .service-icon {
+        transform: scale(1.2) rotate(15deg);
+      }
+      .portfolio-item:hover img {
+        transform: scale(1.05);
+      }
+      .portfolio-item:hover .overlay {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .client-logo:hover {
+        transform: scale(1.1);
+      }
+      .scroll-progress {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 0;
+        height: 4px;
+        background: linear-gradient(to right, #f97316, #2563eb);
+        z-index: 50;
+        transition: width 0.3s ease;
+      }
+      .back-to-top {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(to right, #f97316, #2563eb);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        cursor: pointer;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        z-index: 50;
+      }
+      .back-to-top.show {
+        opacity: 1;
+        visibility: visible;
+      }
+      .cookie-banner {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background: #1e293b;
+        padding: 15px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        z-index: 9998;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5);
+      }
+      .cookie-banner button {
+        background: linear-gradient(to right, #f97316, #2563eb);
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      /* Testimonial Slider */
+      .testimonial-slider {
+        overflow-x: hidden;
+        position: relative;
+      }
+      .testimonial-slide {
+        display: none;
+        animation: slideIn 1s ease;
+      }
+      .testimonial-slide.active {
+        display: block;
+      }
+      @keyframes slideIn {
+        from {
+          opacity: 0;
+          transform: translateX(50px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+      /* Pricing Toggle */
+      .toggle-switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+      }
+      .toggle-switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+      .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        transition: 0.4s;
+        border-radius: 34px;
+      }
+      .slider:before {
+        position: absolute;
+        content: "";
+        height: 26px;
+        width: 26px;
+        left: 4px;
+        bottom: 4px;
+        background: white;
+        transition: 0.4s;
+        border-radius: 50%;
+      }
+      input:checked + .slider {
+        background: linear-gradient(to right, #f97316, #2563eb);
+      }
+      input:checked + .slider:before {
+        transform: translateX(26px);
+      }
+      /* Lightbox Modal */
+      .lightbox {
+        display: none;
+        position: fixed;
+        z-index: 9999;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.9);
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+      }
+      .lightbox-content {
+        max-width: 90%;
+        max-height: 90%;
+        position: relative;
+      }
+      .lightbox-img {
+        max-width: 100%;
+        max-height: 90vh;
+        object-fit: contain;
+        border: 2px solid #2563eb;
+        border-radius: 10px;
+        box-shadow: 0 0 30px rgba(37, 99, 235, 0.5);
+      }
+      .lightbox-close {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        color: white;
+        font-size: 30px;
+        cursor: pointer;
+        z-index: 10000;
+      }
+      .lightbox-nav {
+        position: absolute;
+        top: 50%;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        padding: 0 20px;
+        transform: translateY(-50%);
+      }
+      .lightbox-nav button {
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 50%;
+        font-size: 24px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+      .lightbox-nav button:hover {
+        background: rgba(255, 255, 255, 0.4);
+      }
+      /* Newsletter */
+      .newsletter {
+        background: #1e293b;
+        padding: 40px 20px;
+        text-align: center;
+        opacity: 0;
+        transform: translateY(50px);
+        transition: all 1s ease;
+      }
+      .newsletter.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      /* Parallax */
+      .parallax-bg {
+        background: url("https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80")
+          center/cover;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .parallax-text {
+        position: relative;
+        z-index: 1;
+        text-align: center;
+        color: white;
+        font-size: 3rem;
+        font-weight: bold;
+        text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        transform: translateY(0);
+        animation: parallaxText 3s ease-in-out infinite;
+      }
+      @keyframes parallaxText {
+        0% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+        100% {
+          transform: translateY(0);
+        }
+      }
+      /* Live Chat Widget */
+      .live-chat {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: linear-gradient(to right, #f97316, #2563eb);
+        color: white;
+        padding: 15px;
+        border-radius: 50%;
+        cursor: pointer;
+        z-index: 50;
+        box-shadow: 0 0 20px rgba(249, 115, 22, 0.5);
+        animation: bounce 2s infinite;
+      }
+      @keyframes bounce {
+        0%,
+        20%,
+        50%,
+        80%,
+        100% {
+          transform: translateY(0);
+        }
+        40% {
+          transform: translateY(-20px);
+        }
+        60% {
+          transform: translateY(-10px);
+        }
+      }
+      /* Hamburger Menu */
+      .hamburger {
+        display: none;
+        flex-direction: column;
+        cursor: pointer;
+      }
+      .hamburger span {
+        width: 25px;
+        height: 3px;
+        background: white;
+        margin: 3px 0;
+        transition: 0.3s;
+      }
+      .mobile-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: #0f172a;
+        padding: 20px;
+        flex-direction: column;
+        gap: 15px;
+        z-index: 40;
+      }
+      .mobile-menu a {
+        display: block;
+        color: white;
+        text-decoration: none;
+        padding: 10px;
+        border-bottom: 1px solid #1e293b;
+      }
+      @media (max-width: 768px) {
+        .hamburger {
+          display: flex;
+        }
+        .desktop-nav {
+          display: none;
+        }
+        .hero-text {
+          font-size: 2rem;
+        }
+        .service-card,
+        .pricing-card {
+          margin-bottom: 20px;
+        }
+        .contact-form {
+          margin-top: 40px;
+        }
+        .map-section {
+          margin-top: 40px;
+        }
+        .team-member {
+          margin-bottom: 30px;
+        }
+        .footer-social {
+          margin-top: 20px;
+        }
+      }
+      @media (max-width: 480px) {
+        .hero-text {
+          font-size: 1.5rem;
+        }
+      }
+    </style>
+  </head>
+
+  <body class="bg-[#0f172a] text-gray-100 font-sans overflow-x-hidden">
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scroll-progress"></div>
+
+    <!-- Back to Top Button -->
+    <div class="back-to-top" id="back-to-top">
+      <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <!-- NAVBAR -->
+    <header
+      class="fixed top-0 w-full bg-[#0f172a]/90 backdrop-blur-md z-50 shadow-lg"
+    >
+      <div
+        class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between"
+      >
+        <h1 class="text-2xl font-bold text-white">Kolaboravis</h1>
+        <!-- Hamburger Menu -->
+        <div class="hamburger" id="hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <!-- Desktop Navigation -->
+        <nav class="hidden md:flex space-x-8 font-medium desktop-nav">
+          <a href="#home" class="hover:text-orange-400">Home</a>
+          <a href="#services" class="hover:text-orange-400">Services</a>
+          <a href="#portfolio" class="hover:text-orange-400">Portfolio</a>
+          <a href="#clients" class="hover:text-orange-400">Clients</a>
+          <a href="#testimonials" class="hover:text-orange-400">Testimonials</a>
+          <a href="#pricing" class="hover:text-orange-400">Pricing</a>
+          <a href="#contact" class="hover:text-orange-400">Contact</a>
+        </nav>
+        <a
+          href="https://wa.me/6281234567890?text=Halo%20Kolaboravis%2C%20saya%20ingin%20bekerja%20sama"
+          class="btn-main px-4 py-2 rounded-full font-semibold text-sm"
+          >Let's Talk</a
+        >
+      </div>
+      <!-- Mobile Menu -->
+      <div class="mobile-menu" id="mobile-menu">
+        <a href="#home" onclick="toggleMobileMenu()">Home</a>
+        <a href="#services" onclick="toggleMobileMenu()">Services</a>
+        <a href="#portfolio" onclick="toggleMobileMenu()">Portfolio</a>
+        <a href="#clients" onclick="toggleMobileMenu()">Clients</a>
+        <a href="#testimonials" onclick="toggleMobileMenu()">Testimonials</a>
+        <a href="#pricing" onclick="toggleMobileMenu()">Pricing</a>
+        <a href="#contact" onclick="toggleMobileMenu()">Contact</a>
+      </div>
+    </header>
+
+    <!-- HERO -->
+    <section
+      id="home"
+      class="relative min-h-screen flex items-center justify-center text-center overflow-hidden"
+    >
+      <video
+        autoplay
+        muted
+        loop
+        class="absolute w-full h-full object-cover"
+        src="  https://cdn.coverr.co/videos/coverr-woman-adjusting-camera-6638/720p.mp4  "
+      ></video>
+      <div class="absolute inset-0 bg-black/70"></div>
+      <div class="relative z-10 px-6 max-w-4xl mx-auto fade-in">
+        <h1
+          class="text-5xl md:text-6xl font-extrabold mb-4 gradient-text leading-tight hero-text"
+        >
+          Photography. Videography. Branding.
+        </h1>
+        <p class="text-gray-300 text-lg mb-8">
+          We tell stories through motion, light, and design — helping brands
+          inspire their audience.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="#portfolio"
+            class="btn-main px-8 py-3 rounded-full font-semibold"
+            >View Our Works</a
+          >
+          <a
+            href="#services"
+            class="border border-orange-400 text-orange-400 px-8 py-3 rounded-full font-semibold hover:bg-orange-400 hover:text-white transition"
+            >Our Services</a
+          >
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services" class="py-32 bg-[#111827] text-center fade-in">
+      <h2 class="text-4xl font-bold mb-4 gradient-text">Our Expertise</h2>
+      <p class="text-gray-400 mb-16">
+        Bringing brands to life through creativity and precision.
+      </p>
+      <div class="grid md:grid-cols-3 gap-10 max-w-6xl mx-auto px-6 text-left">
+        <div
+          class="service-card bg-[#1e293b] p-8 rounded-2xl shadow-lg transition duration-300 hover:scale-105"
+        >
+          <i
+            class="fa-solid fa-camera text-orange-400 text-4xl mb-6 service-icon"
+          ></i>
+          <h3 class="text-2xl font-semibold mb-2">Photography</h3>
+          <p class="text-gray-400 mb-4">
+            Capturing brand identity through stunning product and lifestyle
+            imagery.
+          </p>
+          <a href="#" class="text-orange-400 hover:underline">Learn More →</a>
+        </div>
+        <div
+          class="service-card bg-[#1e293b] p-8 rounded-2xl shadow-lg transition duration-300 hover:scale-105"
+        >
+          <i
+            class="fa-solid fa-video text-orange-400 text-4xl mb-6 service-icon"
+          ></i>
+          <h3 class="text-2xl font-semibold mb-2">Videography</h3>
+          <p class="text-gray-400 mb-4">
+            Storytelling in motion — crafting cinematic videos that connect
+            emotionally.
+          </p>
+          <a href="#" class="text-orange-400 hover:underline">Learn More →</a>
+        </div>
+        <div
+          class="service-card bg-[#1e293b] p-8 rounded-2xl shadow-lg transition duration-300 hover:scale-105"
+        >
+          <i
+            class="fa-solid fa-palette text-orange-400 text-4xl mb-6 service-icon"
+          ></i>
+          <h3 class="text-2xl font-semibold mb-2">Branding & Design</h3>
+          <p class="text-gray-400 mb-4">
+            Building brand presence through identity systems, packaging, and
+            visuals.
+          </p>
+          <a href="#" class="text-orange-400 hover:underline">Learn More →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- PORTFOLIO -->
+    <section id="portfolio" class="py-28 bg-[#0f172a] fade-in text-center">
+      <h2 class="text-4xl font-bold mb-6 gradient-text">Our Portfolio</h2>
+      <p class="text-gray-400 mb-10">
+        A showcase of our creative collaborations across photography, video, and
+        design.
+      </p>
+
+      <!-- Filter Buttons -->
+      <div class="flex justify-center gap-4 mb-12 flex-wrap">
+        <button
+          class="filter-btn active px-6 py-2 rounded-full font-semibold text-sm"
+          data-filter="all"
+        >
+          All
+        </button>
+        <button
+          class="filter-btn px-6 py-2 rounded-full font-semibold text-sm bg-[#1e293b]"
+          data-filter="photo"
+        >
+          Photography
+        </button>
+        <button
+          class="filter-btn px-6 py-2 rounded-full font-semibold text-sm bg-[#1e293b]"
+          data-filter="video"
+        >
+          Videography
+        </button>
+        <button
+          class="filter-btn px-6 py-2 rounded-full font-semibold text-sm bg-[#1e293b]"
+          data-filter="design"
+        >
+          Design
+        </button>
+      </div>
+
+      <!-- Portfolio Grid -->
+      <div
+        id="portfolio-grid"
+        class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto px-6"
+      >
+        <!-- Photo -->
+        <div
+          class="portfolio-item photo relative group overflow-hidden rounded-2xl"
+          onclick="openLightbox(0)"
+        >
+          <img
+            src="https://images.unsplash.com/photo-1471341971476-ae15ff5dd4ea?q=80&w=600"
+            class="w-full h-80 object-cover group-hover:scale-110 transition-all duration-500"
+          />
+          <div
+            class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex items-center justify-center transition"
+          >
+            <p class="text-white font-semibold text-lg">Product Campaign</p>
+          </div>
+        </div>
+
+        <!-- Video -->
+        <div
+          class="portfolio-item video relative group overflow-hidden rounded-2xl"
+          onclick="openLightbox(1)"
+        >
+          <img
+            src="https://images.unsplash.com/photo-1599058917212-d750089bc07e?q=80&w=600"
+            class="w-full h-80 object-cover group-hover:scale-110 transition-all duration-500"
+          />
+          <div
+            class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex items-center justify-center transition"
+          >
+            <p class="text-white font-semibold text-lg">Fitness Brand Video</p>
+          </div>
+        </div>
+
+        <!-- Design -->
+        <div
+          class="portfolio-item design relative group overflow-hidden rounded-2xl"
+          onclick="openLightbox(2)"
+        >
+          <img
+            src="https://images.unsplash.com/photo-1633533452148-a9657d2c9a5f?q=80&w=600"
+            class="w-full h-80 object-cover group-hover:scale-110 transition-all duration-500"
+          />
+          <div
+            class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex items-center justify-center transition"
+          >
+            <p class="text-white font-semibold text-lg">Packaging Design</p>
+          </div>
+        </div>
+
+        <!-- Photo -->
+        <div
+          class="portfolio-item photo relative group overflow-hidden rounded-2xl"
+          onclick="openLightbox(3)"
+        >
+          <img
+            src="https://images.unsplash.com/photo-1551292831-023188e78222?q=80&w=600"
+            class="w-full h-80 object-cover group-hover:scale-110 transition-all duration-500"
+          />
+          <div
+            class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex items-center justify-center transition"
+          >
+            <p class="text-white font-semibold text-lg">Editorial Shoot</p>
+          </div>
+        </div>
+
+        <!-- Video -->
+        <div
+          class="portfolio-item video relative group overflow-hidden rounded-2xl"
+          onclick="openLightbox(4)"
+        >
+          <img
+            src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=600"
+            class="w-full h-80 object-cover group-hover:scale-110 transition-all duration-500"
+          />
+          <div
+            class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex items-center justify-center transition"
+          >
+            <p class="text-white font-semibold text-lg">Commercial Ad</p>
+          </div>
+        </div>
+
+        <!-- Design -->
+        <div
+          class="portfolio-item design relative group overflow-hidden rounded-2xl"
+          onclick="openLightbox(5)"
+        >
+          <img
+            src="https://images.unsplash.com/photo-1611241893603-3c359704e0ee?q=80&w=600"
+            class="w-full h-80 object-cover group-hover:scale-110 transition-all duration-500"
+          />
+          <div
+            class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex items-center justify-center transition"
+          >
+            <p class="text-white font-semibold text-lg">Logo Concept</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CLIENTS -->
+    <section
+      id="clients"
+      class="relative py-32 bg-gradient-to-r from-[#0f172a] via-[#1e293b] to-[#0f172a] text-center overflow-hidden"
+    >
+      <!-- dekorasi background -->
+      <div
+        class="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.08)_0,transparent_70%)]"
+      ></div>
+
+      <div class="relative z-10 max-w-7xl mx-auto px-6">
+        <h2
+          class="text-4xl md:text-5xl font-extrabold mb-6 bg-gradient-to-r from-sky-400 to-indigo-400 bg-clip-text text-transparent"
+        >
+          Trusted By
+        </h2>
+        <p class="text-gray-400 mb-14 text-lg">
+          We’ve collaborated with visionary brands that trust our creative
+          touch.
+        </p>
+
+        <!-- logo grid -->
+        <div
+          class="flex flex-wrap justify-center items-center gap-8 md:gap-16 grayscale hover:grayscale-0 transition-all duration-500"
+        >
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/a/a7/Tokopedia.svg"
+            class="h-12 md:h-16 opacity-90 hover:opacity-100 hover:scale-110 transition client-logo"
+            alt="Tokopedia"
+          />
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/0/0e/Shopee_logo.svg"
+            class="h-12 md:h-16 opacity-90 hover:opacity-100 hover:scale-110 transition client-logo"
+            alt="Shopee"
+          />
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/f/f6/Grab_Logo.svg"
+            class="h-10 md:h-14 opacity-90 hover:opacity-100 hover:scale-110 transition client-logo"
+            alt="Grab"
+          />
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/2/2b/GoTo_logo.png"
+            class="h-12 md:h-16 opacity-90 hover:opacity-100 hover:scale-110 transition client-logo"
+            alt="GoTo"
+          />
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/9/99/Gojek_logo_2019.svg"
+            class="h-10 md:h-14 opacity-90 hover:opacity-100 hover:scale-110 transition client-logo"
+            alt="Gojek"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section id="testimonials" class="py-28 bg-[#0f172a] fade-in text-center">
+      <h2 class="text-4xl font-bold mb-6 gradient-text">
+        What Our Clients Say
+      </h2>
+      <p class="text-gray-400 mb-10">
+        Don't just take our word for it — hear from the brands we've helped
+        grow.
+      </p>
+
+      <!-- Testimonial Slider -->
+      <div class="max-w-4xl mx-auto px-6">
+        <div class="testimonial-slider">
+          <div class="testimonial-slide active">
+            <div class="bg-[#1e293b] p-8 rounded-2xl shadow-lg">
+              <p class="text-gray-300 text-lg mb-4">
+                "Kolaboravis tidak hanya membuat website, mereka memahami visi
+                kami dan membantu mewujudkannya dengan desain yang menakjubkan."
+              </p>
+              <h4 class="text-white font-semibold">
+                — Budi Santoso, CEO Toko Online
+              </h4>
+            </div>
+          </div>
+          <div class="testimonial-slide">
+            <div class="bg-[#1e293b] p-8 rounded-2xl shadow-lg">
+              <p class="text-gray-300 text-lg mb-4">
+                "Video promosi yang mereka buat benar-benar meningkatkan
+                penjualan kami. Tim mereka sangat profesional dan responsif."
+              </p>
+              <h4 class="text-white font-semibold">
+                — Siti Rahayu, Pemilik Salon
+              </h4>
+            </div>
+          </div>
+          <div class="testimonial-slide">
+            <div class="bg-[#1e293b] p-8 rounded-2xl shadow-lg">
+              <p class="text-gray-300 text-lg mb-4">
+                "Desain branding kami sekarang terlihat modern dan profesional.
+                Kami sangat puas dengan hasil kerja Kolaboravis."
+              </p>
+              <h4 class="text-white font-semibold">
+                — Andi Pratama, Founder Startup
+              </h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRICING -->
+    <section id="pricing" class="py-28 bg-[#111827] text-center fade-in">
+      <h2 class="text-4xl font-bold mb-4 gradient-text">Our Pricing</h2>
+      <p class="text-gray-400 mb-16">
+        Choose the plan that fits your needs. All plans include unlimited
+        revisions and priority support.
+      </p>
+
+      <!-- Pricing Cards -->
+      <div class="grid md:grid-cols-3 gap-10 max-w-6xl mx-auto px-6 text-left">
+        <div class="pricing-card bg-[#1e293b] p-8 rounded-2xl shadow-lg">
+          <h3 class="text-2xl font-semibold mb-2">Basic</h3>
+          <p class="text-gray-400 mb-4">
+            Perfect for small businesses starting out.
+          </p>
+          <div class="mb-4">
+            <span class="text-3xl font-bold">Rp 500K</span>
+            <span class="text-gray-400">/bulan</span>
+          </div>
+          <ul class="text-gray-400 mb-6">
+            <li>✔️ 1 Landing Page</li>
+            <li>✔️ Template Premium</li>
+            <li>✔️ Basic SEO</li>
+            <li>✔️ Support Email</li>
+          </ul>
+          <a href="#" class="btn-main px-6 py-2 rounded-full font-semibold"
+            >Get Started</a
+          >
+        </div>
+        <div class="pricing-card bg-[#1e293b] p-8 rounded-2xl shadow-lg">
+          <h3 class="text-2xl font-semibold mb-2">Pro</h3>
+          <p class="text-gray-400 mb-4">Ideal for growing businesses.</p>
+          <div class="mb-4">
+            <span class="text-3xl font-bold">Rp 800K</span>
+            <span class="text-gray-400">/bulan</span>
+          </div>
+          <ul class="text-gray-400 mb-6">
+            <li>✔️ Full Custom Landing Page</li>
+            <li>✔️ Advanced SEO</li>
+            <li>✔️ Social Media Integration</li>
+            <li>✔️ Priority Support</li>
+          </ul>
+          <a href="#" class="btn-main px-6 py-2 rounded-full font-semibold"
+            >Get Started</a
+          >
+        </div>
+        <div class="pricing-card bg-[#1e293b] p-8 rounded-2xl shadow-lg">
+          <h3 class="text-2xl font-semibold mb-2">Enterprise</h3>
+          <p class="text-gray-400 mb-4">For large-scale projects.</p>
+          <div class="mb-4">
+            <span class="text-3xl font-bold">Rp 3M</span>
+            <span class="text-gray-400">/bulan</span>
+          </div>
+          <ul class="text-gray-400 mb-6">
+            <li>✔️ Website + Backend</li>
+            <li>✔️ E-commerce Features</li>
+            <li>✔️ Mobile App Integration</li>
+            <li>✔️ Dedicated Account Manager</li>
+          </ul>
+          <a href="#" class="btn-main px-6 py-2 rounded-full font-semibold"
+            >Get Started</a
+          >
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="py-28 bg-[#121a2a] fade-in text-center">
+      <h2 class="text-4xl font-bold mb-6 gradient-text">Let’s Collaborate</h2>
+      <p class="text-gray-400 mb-8 max-w-2xl mx-auto">
+        Ready to bring your next project to life? Let’s make something amazing
+        together.
+      </p>
+      <a
+        href="https://wa.me/6281234567890?text=Halo%20Kolaboravis%2C%20saya%20ingin%20berkolaborasi"
+        target="_blank"
+        class="btn-main px-8 py-3 rounded-full font-semibold shadow-lg inline-block"
+        ><i class="fab fa-whatsapp mr-2"></i> Start a Project</a
+      >
+
+      <!-- Contact Form -->
+      <div class="max-w-4xl mx-auto mt-10 px-6 contact-form">
+        <form class="grid md:grid-cols-2 gap-6">
+          <input
+            type="text"
+            placeholder="Nama Lengkap"
+            class="bg-[#1e293b] p-3 rounded-lg text-white w-full"
+            required
+          />
+          <input
+            type="email"
+            placeholder="Email"
+            class="bg-[#1e293b] p-3 rounded-lg text-white w-full"
+            required
+          />
+          <textarea
+            placeholder="Pesan Anda"
+            rows="4"
+            class="bg-[#1e293b] p-3 rounded-lg text-white col-span-2 w-full"
+            required
+          ></textarea>
+          <button
+            type="submit"
+            class="btn-main px-6 py-3 rounded-lg font-semibold w-full md:w-auto"
+          >
+            Kirim Pesan
+          </button>
+        </form>
+      </div>
+
+      <!-- Google Maps -->
+      <div class="max-w-4xl mx-auto px-6 mt-56 map-section">
+        <h3 class="text-xl font-bold mb-4">Visit Us</h3>
+        <div class="bg-[#121a2a] p-4 rounded-lg">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.197799788351!2d106.7775479!3d-6.1858288!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f3a739123456%3A0x1234567890abcdef!2sGading%20Serpong%2C%20Tangerang!5e0!3m2!1sen!2sid!4v1700000000000!5m2!1sen!2sid"
+            width="100%"
+            height="300"
+            style="border: 0"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- TEAM -->
+    <section id="team" class="py-28 bg-[#111827] text-center fade-in">
+      <h2 class="text-4xl font-bold mb-4 gradient-text">Meet Our Team</h2>
+      <p class="text-gray-400 mb-16">The creative minds behind your success.</p>
+
+      <div class="grid md:grid-cols-3 gap-10 max-w-6xl mx-auto px-6">
+        <div class="team-member bg-[#1e293b] p-8 rounded-2xl">
+          <img
+            src="https://avatar.iran.liara.run/public"
+            class="w-32 h-32 rounded-full mx-auto mb-6"
+          />
+          <h3 class="text-xl font-semibold text-white">Ahmad</h3>
+          <p class="text-gray-400">Lead Designer</p>
+        </div>
+        <div class="team-member bg-[#1e293b] p-8 rounded-2xl">
+          <img
+            src="https://avatar.iran.liara.run/public"
+            class="w-32 h-32 rounded-full mx-auto mb-6"
+          />
+          <h3 class="text-xl font-semibold text-white">Siti</h3>
+          <p class="text-gray-400">Frontend Developer</p>
+        </div>
+        <div class="team-member bg-[#1e293b] p-8 rounded-2xl">
+          <img
+            src="https://avatar.iran.liara.run/public"
+            class="w-32 h-32 rounded-full mx-auto mb-6"
+          />
+          <h3 class="text-xl font-semibold text-white">Budi</h3>
+          <p class="text-gray-400">Project Manager</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-[#111827] text-gray-400 py-12 mt-36 text-center">
+      <div class="max-w-6xl mx-auto px-6">
+        <h3 class="text-2xl font-bold text-white mb-3">Kolaboravis Studio</h3>
+        <p class="text-gray-500 mb-6">
+          Gading Serpong, Tangerang • kolaboravis@gmail.com
+        </p>
+        <div
+          class="flex justify-center gap-6 text-xl mb-6 footer-social flex-wrap"
+        >
+          <a href="https://instagram.com" class="hover:text-orange-400"
+            ><i class="fab fa-instagram"></i
+          ></a>
+          <a href="https://youtube.com" class="hover:text-orange-400"
+            ><i class="fab fa-youtube"></i
+          ></a>
+          <a href="https://tiktok.com" class="hover:text-orange-400"
+            ><i class="fab fa-tiktok"></i
+          ></a>
+          <a href="mailto:hello@kolaboravis.id" class="hover:text-orange-400"
+            ><i class="fa-solid fa-envelope"></i
+          ></a>
+        </div>
+        <p class="text-sm text-gray-500">
+          © 2025 Kolaboravis Creative Studio. All Rights Reserved. <br />
+          <span class="text-gray-400">
+            Powered by
+            <a
+              href="https://www.webkm.id"
+              class="text-white font-semibold hover:underline"
+              >WebKM</a
+            >
+          </span>
+        </p>
+      </div>
+    </footer>
+
+    <!-- LIGHTBOX MODAL -->
+    <div class="lightbox" id="lightbox">
+      <div class="lightbox-content">
+        <img
+          id="lightbox-img"
+          class="lightbox-img"
+          src=""
+          alt="Portfolio Image"
+        />
+        <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+        <div class="lightbox-nav">
+          <button onclick="prevImage()"><</button>
+          <button onclick="nextImage()">></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- JS Filter -->
+    <script>
+      const buttons = document.querySelectorAll(".filter-btn");
+      const items = document.querySelectorAll(".portfolio-item");
+
+      buttons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          buttons.forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+
+          const filter = btn.getAttribute("data-filter");
+          items.forEach((item) => {
+            item.style.display =
+              filter === "all" || item.classList.contains(filter)
+                ? "block"
+                : "none";
+          });
+        });
+      });
+
+      // Scroll Progress Bar
+      window.addEventListener("scroll", () => {
+        const scrollTop = window.pageYOffset;
+        const docHeight = document.body.scrollHeight - window.innerHeight;
+        const scrollPercent = (scrollTop / docHeight) * 100;
+        document.getElementById(
+          "scroll-progress"
+        ).style.width = `${scrollPercent}%`;
+      });
+
+      // Back to Top Button
+      const backToTop = document.getElementById("back-to-top");
+      window.addEventListener("scroll", () => {
+        if (window.pageYOffset > 300) {
+          backToTop.classList.add("show");
+        } else {
+          backToTop.classList.remove("show");
+        }
+      });
+
+      backToTop.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+
+      // Typewriter Effect for Hero Text (Optional)
+      const heroText = document.querySelector("#home h1");
+      const originalText = heroText.textContent;
+      heroText.textContent = "";
+      let i = 0;
+      const typewriter = setInterval(() => {
+        if (i < originalText.length) {
+          heroText.textContent += originalText.charAt(i);
+          i++;
+        } else {
+          clearInterval(typewriter);
+        }
+      }, 100);
+
+      // Testimonial Slider
+      const slides = document.querySelectorAll(".testimonial-slide");
+      const dots = document.querySelectorAll(".dot");
+
+      let currentSlide = 0;
+
+      function showSlide(index) {
+        slides.forEach((slide) => slide.classList.remove("active"));
+        dots.forEach((dot) => dot.classList.remove("active"));
+        slides[index].classList.add("active");
+        dots[index].classList.add("active");
+        currentSlide = index;
+      }
+
+      dots.forEach((dot, index) => {
+        dot.addEventListener("click", () => {
+          showSlide(index);
+        });
+      });
+
+      // Auto-scroll testimonials
+      setInterval(() => {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showSlide(currentSlide);
+      }, 5000);
+
+      // Pricing Toggle
+      const pricingToggle = document.getElementById("pricing-toggle");
+      pricingToggle.addEventListener("change", () => {
+        const prices = document.querySelectorAll(".text-3xl.font-bold");
+        prices.forEach((price) => {
+          if (pricingToggle.checked) {
+            price.textContent = price.textContent
+              .replace("Rp", "Rp ")
+              .replace("/bulan", "/tahun");
+          } else {
+            price.textContent = price.textContent
+              .replace("Rp ", "Rp")
+              .replace("/tahun", "/bulan");
+          }
+        });
+      });
+
+      // Lightbox Modal
+      const lightbox = document.getElementById("lightbox");
+      const lightboxImg = document.getElementById("lightbox-img");
+      const portfolioItems = document.querySelectorAll(".portfolio-item");
+      let currentIndex = 0;
+
+      function openLightbox(index) {
+        currentIndex = index;
+        lightboxImg.src = portfolioItems[index].querySelector("img").src;
+        lightbox.style.display = "flex";
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeLightbox() {
+        lightbox.style.display = "none";
+        document.body.style.overflow = "auto";
+      }
+
+      function prevImage() {
+        currentIndex =
+          (currentIndex - 1 + portfolioItems.length) % portfolioItems.length;
+        lightboxImg.src = portfolioItems[currentIndex].querySelector("img").src;
+      }
+
+      function nextImage() {
+        currentIndex = (currentIndex + 1) % portfolioItems.length;
+        lightboxImg.src = portfolioItems[currentIndex].querySelector("img").src;
+      }
+
+      // Close lightbox when clicking outside
+      lightbox.addEventListener("click", (e) => {
+        if (e.target === lightbox) {
+          closeLightbox();
+        }
+      });
+
+      // Newsletter Animation
+      const newsletter = document.getElementById("newsletter");
+      window.addEventListener("scroll", () => {
+        const rect = newsletter.getBoundingClientRect();
+        if (rect.top < window.innerHeight && rect.bottom >= 0) {
+          newsletter.classList.add("show");
+        }
+      });
+
+      // Live Chat Widget
+      const liveChat = document.getElementById("live-chat");
+      liveChat.addEventListener("click", () => {
+        window.open("https://wa.me/6281234567890", "_blank");
+      });
+
+      // Mobile Menu Toggle
+      const hamburger = document.getElementById("hamburger");
+      const mobileMenu = document.getElementById("mobile-menu");
+
+      function toggleMobileMenu() {
+        mobileMenu.classList.toggle("hidden");
+        mobileMenu.classList.toggle("flex");
+      }
+
+      hamburger.addEventListener("click", toggleMobileMenu);
+    </script>
+  </body>
+</html>
